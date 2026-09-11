@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: "AI BuildFlow",
     description:
       "File-backed, spec-driven workflow for building software with AI.",
-    url: "https://ai-buildflow.vercel.app",
+    url: "https://ai-buildflow-dev.vercel.app",
     siteName: "AI BuildFlow",
     type: "website",
   },

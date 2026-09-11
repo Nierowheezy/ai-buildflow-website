@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllDocSlugs } from "@/lib/mdx";
 import { flattenDocNav } from "@/lib/docs";
 
-const baseUrl = "https://ai-buildflow.vercel.app";
+const baseUrl = "https://ai-buildflow-dev.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const landingRoutes: MetadataRoute.Sitemap = [
