@@ -1,0 +1,42 @@
+---
+title: Testing and CI
+description: Share one real verification recipe between local work and GitHub checks.
+---
+
+Testing and CI are optional layers BuildFlow adds when your project needs them. They share one real recipe: the `Verify` command.
+
+## The model
+
+```text
+/onboard or /adopt -> /ci -> Verify locally -> GitHub runs Verify
+```
+
+BuildFlow separates several kinds of proof that are easy to blur together:
+
+- **Verify command** — project-owned typechecks, tests, builds, or other repeatable checks.
+- **Check** — observable proof that the current work satisfies its spec.
+- **Audit** — branch-aware quality, security, performance, and test review.
+- **Independent Audit** — a fresh reviewer session inspects an approved checkpoint.
+- **Try guide** — a read-only manual walkthrough for human review.
+
+## Add the test gate
+
+Run `/tests` when application logic appears. It adds or normalizes stack-native unit testing and documents the exact command. With `verification.logicTests: "required"`, a logic change without a configured test runner stops and points to `/tests`.
+
+## Define the Verify recipe
+
+Run `/ci` to define one `Verify` command from checks the repository already has, in order: typecheck, tests, then build. Verify is an umbrella for real checks — BuildFlow never invents a test runner or another check just to fill the command.
+
+## Automate GitHub checks
+
+`/ci` creates or aligns a matching GitHub Actions workflow that runs the same Verify command on pull requests and default-branch pushes. Existing workflows stay intact, and remote rules remain a separate choice.
+
+## Gates during work
+
+- A step that adds logic must ship a passing test in the same diff when the test gate is on.
+- The suite must be green before the step is approved.
+- Completion requires the exact Verify command to have passed in the session (when declared).
+
+## When to skip
+
+All quality gates default to manual. Start with none of them; add testing when application logic appears, CI when you want automatic checks, and browser automation when a repeatable harness would materially help.

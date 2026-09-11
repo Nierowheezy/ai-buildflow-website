@@ -1,0 +1,25 @@
+---
+title: Prototype
+description: Create throwaway static mockups before implementation.
+---
+
+## Invocation
+
+```text
+/prototype "settings page"       (Claude Code)
+$prototype "settings page"       (Codex)
+```
+
+## What happens
+
+1. Creates throwaway static mockups (`prototypes/*.html`) to lock the look.
+2. Writes `prototypes/theme.css` with the shared design tokens — colors, type, spacing.
+3. Gives the spec a real visual reference to build against instead of prose.
+
+## After the build
+
+When the feature consumes the prototypes, the first build step ports `theme.css` tokens into the app's global stylesheet. The HTML mockups are discarded at `/complete` — the tokens live in the real stylesheet.
+
+## When to use
+
+Use `/prototype` before the build loop when you want to lock the visual direction cheaply, or when the feature is "make it look like X" where prose underspecifies the target.

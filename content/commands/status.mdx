@@ -1,0 +1,27 @@
+---
+title: Status
+description: Read-only progress summary, drift warning, and suggested next action.
+---
+
+## Invocation
+
+```text
+/status       (Claude Code)
+$status       (Codex)
+buildflow status
+```
+
+## What happens
+
+1. Reads the workflow files: config, plans, overview, current feature, findings, review.
+2. Reports progress against the build plan.
+3. Warns about drift — stale overview, missing adapters, invalid config, dirty state.
+4. Suggests the exact next action.
+
+## Reads and writes
+
+Read-only. `status` never changes files.
+
+## When to use
+
+Anytime — after a break, before starting work, or to confirm what moves the project forward. It is the orientation command that resumes a project from files instead of chat memory.

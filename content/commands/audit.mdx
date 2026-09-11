@@ -1,0 +1,46 @@
+---
+title: Audit
+description: Review a branch or project, record findings, or run independent review.
+---
+
+## Invocation
+
+```text
+/audit current              # review the current branch delta
+/audit                      # full-project review
+/audit security current     # focused lens
+/audit independent current  # fresh reviewer, immutable checkpoint
+```
+
+In Codex, use the same forms with `$audit`.
+
+## What happens
+
+1. Reviews the branch delta (or whole project) across quality, security, performance, and tests.
+2. Supports focused lenses: quality, security, performance, tests.
+3. Records durable findings in `buildflow/context/findings.md` with IDs, severities (P0-P3), and statuses.
+4. Open or `fixed` P0/P1 findings block completion.
+
+## Independent audit
+
+`/audit independent current` prepares an immutable checkpoint handoff for a selected fresh reviewer session using the installed adapter and model. The receipt records the target, permitted base, spec hash, reviewer metadata, check result, and remaining risk. Later relevant changes make the receipt stale.
+
+## Findings ledger
+
+| Status | Meaning |
+| --- | --- |
+| `open` | Raised, not yet addressed |
+| `fixed` | Repaired but not yet re-reviewed |
+| `closed` | Re-reviewed and resolved |
+| `accepted` | User's explicit decision (reason recorded) |
+| `invalid` | Re-examined and dismissed with evidence |
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Branch delta, spec, standards, tests, review state | `findings.md`, `review.md` | Edit product code (unless a focused repair gate runs), commit |
+
+## When to use
+
+Run `/audit current` before `/complete` to review the builder's delta in the same session. Run `/audit independent current` for fresh, isolated review when sensitive or unusually broad work warrants it.

@@ -1,0 +1,33 @@
+---
+title: CI
+description: Align one project Verify command with automatic GitHub checks.
+---
+
+## Invocation
+
+```text
+/ci       (Claude Code)
+$ci       (Codex)
+```
+
+## What happens
+
+1. Inspects the real project for existing checks.
+2. Defines one `Verify` command from checks that already exist, in order: typecheck, tests, then build.
+3. Proves the recipe locally.
+4. Creates or aligns a matching GitHub Actions workflow that runs the same command on pull requests and default-branch pushes.
+5. Stops before push or remote ruleset changes.
+
+## Verify is the recipe
+
+`ci` does not invent a test runner, coverage target, browser suite, or version matrix just to fill the workflow. Verify combines only configured checks the repository actually has. CI runs that same recipe automatically.
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Existing checks and workflows | One `Verify` command and a workflow file | Push, deploy, change remote rulesets |
+
+## When to use
+
+Automatic GitHub checks are an explicit setup step, not part of installation or onboarding. Run `/ci` when you want BuildFlow to define one project-specific Verify command and matching GitHub checks. Existing CI stays intact.

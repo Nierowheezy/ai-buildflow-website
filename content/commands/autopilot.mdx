@@ -1,0 +1,42 @@
+---
+title: Autopilot
+description: Run one bounded spec and build pass through configured gates.
+---
+
+## Invocation
+
+```text
+/autopilot                 # current feature, else next planned item
+/autopilot 3               # target a build-plan feature
+/autopilot fix "issue"     # write and build a fix
+/autopilot resume          # continue the current feature
+```
+
+In Codex, use `$autopilot`.
+
+## What happens
+
+1. Preflights exactly like `/status` — config, plans, overview, findings, git state.
+2. Chooses or writes the spec (feature or fix behavior).
+3. Creates or reuses the branch.
+4. Implements in small steps without pausing for approval after each step — the review happens at the final packet.
+5. Applies the configured regular quality gates: check, audit, independent review, try guide.
+6. Repairs confirmed P0/P1 findings when its audit gate runs.
+7. Stops before `/complete` with a compact review packet.
+
+## Boundaries
+
+Autopilot is an explicit opt-in that runs **one** bounded loop. It never:
+
+- Deletes branches or merges
+- Pushes, deploys, publishes, or sends
+- Deletes data or runs destructive actions
+- Makes product decisions not covered by the docs
+- Contributes after two failed fix attempts on the same issue
+
+## Rules
+
+- One Autopilot run handles one feature or one fix.
+- Rollback is intentionally excluded — reversing completed work requires the reviewed `/rollback` + `/implement` path.
+- Autopilot uses `qualityGates.regular`; the Continuous gate policies do not change a run.
+- It stops before `/complete`. It never merges.

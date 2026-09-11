@@ -1,0 +1,51 @@
+---
+title: Existing Codebase Adoption
+description: Bring BuildFlow into a repository with shipped features and conventions.
+---
+
+Bring BuildFlow into an established app. Adoption surveys what already works and generates plans that reflect the real project.
+
+## When to adopt
+
+Use `/adopt` (or `$adopt`) when the repository already has shipped features, an established codebase, or conventions that a fresh `/onboard` cannot discover. Adoption is the on-ramp for brownfield projects.
+
+## What adopt does
+
+1. Inspects the repository structure, stack, commands, and conventions.
+2. Surveys shipped features — routes, modules, data models, and public behavior.
+3. Checkpoints what already exists so planning reflects reality.
+4. Distinguishes planned work from completed work.
+5. Prepares project context that accounts for the current state.
+
+## The adoption path
+
+```text
+$ cd established-app
+$ npx create-ai-buildflow@latest
+/adopt
+```
+
+After adoption:
+
+- Run `/overview` to regenerate durable project context from the surveyed plans.
+- Run `/feature` for the next planned item.
+- Follow the same [core workflow](/docs/core-workflow) loop for new work.
+
+## Why adoption matters
+
+BuildFlow plans should describe the roadmap, not pretend the repository starts empty. Adopting an existing codebase:
+
+- Avoids re-specing features that already shipped.
+- Uses real commands and conventions in generated context.
+- Creates a build plan that reflects the actual work queue.
+
+## Manual equivalents
+
+If you prefer to write plans directly, the adoption result is the same two user-owned files:
+
+| File | Purpose |
+| --- | --- |
+| `buildflow/project-plan.md` | Product direction, users, features, stack |
+| `buildflow/build-plan.md` | Ordered feature list with stable numbers |
+
+Existing projects keep their own `CLAUDE.md`, `AGENTS.md`, and configuration during updates.

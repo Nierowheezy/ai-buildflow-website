@@ -1,0 +1,25 @@
+---
+title: Browser Tests
+description: Add or normalize an explicit repeatable browser harness.
+---
+
+## Invocation
+
+```text
+/browser-tests       (Claude Code)
+$browser-tests       (Codex)
+```
+
+## What happens
+
+1. Adds an explicit, repeatable browser test harness (for example Playwright).
+2. Documents the exact command as `Browser tests:` in `AGENTS.md`.
+3. Enables `/check` and Continuous Mode to reuse it without installing tooling mid-feature.
+
+## When to use
+
+Browser testing is opt-in. Run `/browser-tests` when a repeatable harness would materially improve the project — stable behavioral done-whens that automated browser coverage can prove proportionately.
+
+## What it does not replace
+
+Browser automation covers stable behavioral flows. Direct browser evidence still proves visual fidelity, authenticated real-profile behavior, browser chrome, and other gaps the harness does not observe.

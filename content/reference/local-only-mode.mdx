@@ -1,0 +1,25 @@
+---
+title: Local-Only Mode
+description: Run the BuildFlow workflow entirely on your machine.
+---
+
+BuildFlow works fully local. The manual workflow, Autopilot, and Continuous Mode complete features locally, and every automated mode preserves the same human gates before any external action.
+
+## What stays local by default
+
+- All workflow files and project state.
+- `/check` evidence — screenshots, output, command results.
+- Independent-review receipts (fresh reviewer session on your machine).
+- Local Git branches and commits.
+
+## What is never automatic
+
+No mode pushes, deploys, publishes, sends messages, performs destructive actions, waives findings, or makes uncovered product decisions. Commit, merge, push, and deploy all keep explicit human approval gates.
+
+## CI and remote rules
+
+GitHub checks are a separate explicit setup via `/ci`. It creates the workflow file locally; GitHub branch protection or a ruleset can require the check after the repository is pushed — but that is a remote setting you own.
+
+## Getting started
+
+Start with the [Quick Start](/docs/getting-started). Install BuildFlow locally, write your plans, generate context, and build features end-to-end without any remote service.

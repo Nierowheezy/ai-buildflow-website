@@ -1,0 +1,28 @@
+---
+title: Debug
+description: Reproduce and isolate a failure without editing code.
+---
+
+## Invocation
+
+```text
+/debug "login fails"       (Claude Code)
+$debug "login fails"       (Codex)
+```
+
+## What happens
+
+1. Reproduces the reported failure with the real application.
+2. Traces the cause — logs, requests, output — without editing any code.
+3. Isolates the failing step or condition.
+4. Hands the evidence to `/fix` (standalone bug) or `/implement` (belongs to active work).
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| App, logs, config, state | None | Edit code, commit, merge |
+
+## When to use
+
+Start with `/debug` when you know something is failing but not why. A confirmed problem then returns to `/fix` or `/implement` with the evidence.

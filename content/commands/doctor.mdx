@@ -1,0 +1,26 @@
+---
+title: Doctor
+description: Check BuildFlow setup and drift without changing files.
+---
+
+## Invocation
+
+```text
+/doctor       (Claude Code)
+$doctor       (Codex)
+```
+
+## What happens
+
+1. Checks BuildFlow installation health — adapters, plans, overview freshness, and workflow drift.
+2. Detects missing, invalid, or stale workflow state.
+3. Flags oversized legacy overviews.
+4. Reports the exact recovery command for anything broken.
+
+## Reads and writes
+
+Read-only. `doctor` never changes files.
+
+## When to use
+
+Run `/doctor` after installation, after updating BuildFlow, or whenever a mutating workflow command stops and points to it. An invalid `config.json` makes mutating commands stop and defer to `/doctor` instead of guessing.

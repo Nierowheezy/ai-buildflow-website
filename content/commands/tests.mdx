@@ -1,0 +1,30 @@
+---
+title: Tests
+description: Add or normalize stack-native unit testing.
+---
+
+## Invocation
+
+```text
+/tests       (Claude Code)
+$tests       (Codex)
+```
+
+## What happens
+
+1. Detects the project's stack and existing test setup.
+2. Adds or normalizes stack-native unit testing.
+3. Documents the exact test command in `AGENTS.md`.
+4. Turns on the test gate for the workflow.
+
+## When to use
+
+Testing is opt-in. Run `/tests` when application logic appears and you want the unit test gate. It is required by `verification.logicTests: "required"` — a logic change without a configured test runner stops and points here.
+
+## The test gate
+
+- A step that adds logic must ship a passing test in the same diff when the test gate is on.
+- The suite must be green before the step is approved.
+- Create focused test files next to the source they cover.
+
+Create focused test files next to the source they cover, per `coding-standards.md`.

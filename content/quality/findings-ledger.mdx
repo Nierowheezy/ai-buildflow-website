@@ -1,0 +1,42 @@
+---
+title: The Findings Ledger
+description: Durable findings with IDs, severities, and statuses that enforce completion.
+---
+
+The findings ledger is `buildflow/context/findings.md` — the workflow's durable record of review findings. It is what makes unresolved findings enforceable at completion.
+
+## Structure
+
+The ledger stores every finding with a durable ID, severity, and status:
+
+| Field | Example |
+| --- | --- |
+| ID | `F-01` |
+| Severity | `P0` (critical), `P1` (high), `P2` (medium), `P3` (low) |
+| Status | `open`, `fixed`, `closed`, `accepted`, `invalid` |
+| Found in | Where the audit examined |
+
+## Status lifecycle
+
+```text
+/audit raises -> open
+/implement repairs -> fixed   (never closed by the repairer)
+/audit re-reviews -> closed
+user decision -> accepted     (reason recorded, only by the user)
+re-examination -> invalid     (dismissed with recorded evidence)
+```
+
+- A repair sets `fixed`, never `closed` — because a fix can introduce a worse defect than the one it removed.
+- Only the user can set `accepted`; the agent never sets it for them.
+- `invalid` requires an `/audit` re-examination verdict or the user's explicit call.
+
+## Why the ledger blocks completion
+
+`/complete` refuses to merge while any P0 or P1 finding is `open` or `fixed`. The only ways past the gate:
+
+- `accepted` — your explicit decision in the current chat, reason recorded.
+- `invalid` — an `/audit` re-examination verdict with recorded evidence, or your explicit call.
+
+## Resolved findings move with the work
+
+At completion, `closed`, `accepted`, and `invalid` entries are appended to the work's archive (with an ID prefix like `12/F-03`), then removed from the live ledger. `open`, `fixed`, and `unverified` entries stay in the ledger with their IDs so they are never silently dropped. When nothing remains, the ledger resets to its canonical stub.

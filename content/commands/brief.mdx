@@ -1,0 +1,26 @@
+---
+title: Brief
+description: Preview an upcoming feature without changing project state.
+---
+
+## Invocation
+
+```text
+/brief 4              (Claude Code)
+$brief 4              (Codex)
+```
+
+## What happens
+
+1. Reads the next (or requested) build-plan feature.
+2. Estimates scope, dependencies, and size.
+3. Reports what the feature will touch and what it depends on.
+4. Changes nothing — no spec, no context writes.
+
+## Reads and writes
+
+Read-only orientation. `brief` never changes project state.
+
+## When to use
+
+Before you spec a feature, `brief` gives the shape of what is coming: scope, dependencies, and size — a cheap preview before `/feature` commits to a spec.

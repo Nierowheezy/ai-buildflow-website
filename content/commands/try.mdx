@@ -1,0 +1,28 @@
+---
+title: Try
+description: Generate a read-only manual review walkthrough for humans.
+---
+
+## Invocation
+
+```text
+/try              (Claude Code)
+/try latest       # walk through the most recently completed feature
+$try              (Codex)
+```
+
+## What happens
+
+1. Reads the active spec (or archived feature).
+2. Generates a human manual-review guide: where to go, what to click, what to expect.
+3. Produces it read-only — it never claims you performed the steps.
+
+## Reads and writes
+
+Read-only. `try` never changes project state.
+
+## When to use
+
+Use `/try` when a feature affects UI, navigation, copy, a public API or CLI, output, or another workflow a person directly uses. It is the manual complement to `/check`'s automated evidence.
+
+> The guide is a review artifact, not proof. Never claim the user performed it.

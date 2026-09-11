@@ -1,0 +1,28 @@
+---
+title: Discovery
+description: Develop detailed plans through a reviewed conversation.
+---
+
+## Invocation
+
+```text
+/discovery "Payment flow"      (Claude Code)
+$discovery "Payment flow"      (Codex)
+```
+
+## What happens
+
+1. Runs a deep, multi-turn planning conversation around a feature or capability.
+2. Drafts the two user-owned plans: `project-plan.md` and `build-plan.md`.
+3. Shows you the complete proposed changes before writing.
+4. Writes only after your explicit review and approval.
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Project overview, existing plans, repository | Drafts of `project-plan.md` and `build-plan.md` | Spec a feature, add app code |
+
+## When to use
+
+Discovery is entirely optional. Writing plans directly is fully supported. Use Discovery when you want guided help shaping the roadmap before Overview.

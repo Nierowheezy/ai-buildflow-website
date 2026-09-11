@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">AI BuildFlow</title>
+  <defs>
+    <linearGradient id="brandGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3975ff"/>
+      <stop offset="100%" stop-color="#7aa2ff"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#brandGradDark)" opacity="0.12"/>
+  <g fill="none" stroke="url(#brandGradDark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 14v36M16 14h10M16 50h10"/>
+    <path d="M28 32h8M36 28l4 4-4 4"/>
+    <path d="M48 14v36M48 14h-10M48 50h-10"/>
+    <circle cx="32" cy="32" r="3" fill="url(#brandGradDark)"/>
+    <path d="M32 24v3M29 27h6M32 38v3M29 41h6" stroke-width="1.5"/>
+  </g>
+</svg>

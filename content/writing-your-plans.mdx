@@ -1,0 +1,62 @@
+---
+title: Writing Your Plans
+description: Understand the two user-owned planning files and how they drive the workflow.
+---
+
+Two files remain the planning inputs you own: `buildflow/project-plan.md` and `buildflow/build-plan.md`. Everything else in the workflow is generated from these.
+
+## Project plan
+
+`buildflow/project-plan.md` captures the product direction. Write as much detail as the project needs:
+
+| Section | What goes here |
+| --- | --- |
+| Problem | What the product solves and for whom |
+| Users | Who uses it and their needs |
+| MVP | The minimum capability that is useful |
+| Data | Models, relationships, storage |
+| Stack | Languages, frameworks, services |
+| Monetization | How the product earns (if relevant) |
+| UI direction | Visual and UX decisions that matter |
+
+## Build plan
+
+`buildflow/build-plan.md` is the ordered roadmap. One line per feature, high level, no detail:
+
+```markdown
+- [ ] 1. App shell
+- [ ] 2. Authentication
+- [ ] 3. Review flow
+- [ ] 4. Export reports
+```
+
+Guidelines:
+
+- Keep one feature per line, in build order.
+- Use stable item numbers; they become archive and history identifiers.
+- Check items off as they complete — the first unchecked item is what `/feature` targets.
+- Split oversized features into sub-items (`4a`, `4b`, `4c`) when needed.
+
+## Writing directly vs discovery
+
+Both approaches produce the same files and are fully supported:
+
+```text
+write plans directly ---------------------------> /overview
+optional /discovery -> review + approve plans -> /overview
+```
+
+`/discovery` is an optional deep planning conversation. It drafts both plans, shows you the diff, and writes them only after your explicit approval. It is never required.
+
+## After writing
+
+Run `/overview` to turn both plans into `buildflow/context/project-overview.md` — the compact durable context every workflow skill reads. Overview keeps generated context below 20,000 bytes.
+
+> Edit the upstream plans and regenerate the overview instead of patching generated context by hand. BuildFlow treats `project-overview.md` as derived.
+
+## Keeping plans current
+
+- After the initial build, keep completed items checked and their numbers stable.
+- Add features under a milestone heading such as `## Post-MVP` rather than renumbering.
+- Update `project-plan.md` when a capability changes product direction, users, data, stack, monetization, UI/UX, or deployment.
+- Run `/overview` again after any material plan change.

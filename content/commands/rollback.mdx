@@ -1,0 +1,46 @@
+---
+title: Rollback
+description: Plan a history-preserving reversal of completed work.
+---
+
+## Invocation
+
+```text
+/rollback 4
+/rollback buildflow/history/features/04-pdf-export.md
+```
+
+With no target, list recent completed feature archives and ask you to choose. Never silently pick the latest feature.
+
+In Codex, use the same forms with `$rollback`.
+
+## Preflight
+
+`/rollback` stops before writing when:
+
+- The directory is not a git repository.
+- `current-feature.md` already holds active work.
+- The working tree is dirty.
+- The current branch is not local `main` or the default branch.
+- The target is not a checked build-plan feature with a matching archive.
+
+## What happens
+
+1. **Resolves the exact feature** — matches the number or name against checked plan items and archives, and locates the commit that added it.
+2. **Separates product changes from BuildFlow history** — excludes `.agents/**`, `.claude/**`, `buildflow/**`, `AGENTS.md`, `CLAUDE.md`, and `prototypes/**` so workflow records survive.
+3. **Reviews later-change risk** — inspects every later commit touching the product paths and classifies it: no overlap, likely compatible, dependency risk, or blocked.
+4. **Writes the rollback spec** — records the target commit and parent as full 40-character SHAs, the reason, later commits reviewed, and observable removal criteria.
+5. **Stops for review** — `/implement` then reverses the exact product diff on a `rollback/` branch, preserving all protected BuildFlow paths.
+
+## Rules
+
+- Preserve history. Never delete or rewrite the original feature archive.
+- Plan only — this skill writes the rollback spec and nothing else.
+- One completed feature per rollback.
+- Never use `git reset --hard`, force-push, history rewriting, or broad file restoration.
+- Never infer permission to cascade into later features or destroy stored data.
+- A rollback still uses `/implement`, `/check`, and `/complete` review gates.
+
+## At completion
+
+`/complete` keeps the original feature archive, adds a separate rollback record under `buildflow/history/rollbacks/`, and unchecks the build-plan item so the roadmap reflects that the capability is no longer present.

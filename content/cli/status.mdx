@@ -1,0 +1,24 @@
+---
+title: CLI Status
+description: Read-only project status from the command line.
+---
+
+## Invocation
+
+```bash
+buildflow status
+```
+
+Works in any directory that contains a BuildFlow installation, no agent session required.
+
+## What it reports
+
+- Progress against the build plan.
+- Current work item and its state.
+- Findings and review state.
+- Workflow drift warnings.
+- The suggested next action.
+
+## Read-only
+
+`status` never changes files. It reads the same workflow state `/status` reads and reports it to your terminal.

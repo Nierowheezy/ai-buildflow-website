@@ -1,0 +1,29 @@
+---
+title: Onboard
+description: Tune a fresh BuildFlow installation to the real project.
+---
+
+## Invocation
+
+```text
+/onboard       (Claude Code)
+$onboard       (Codex)
+```
+
+## What happens
+
+1. Inspects the real stack, commands, and coding conventions.
+2. Detects installed adapters and workflow visibility settings.
+3. Recommends ignore rules, standards, and context loading preferences.
+4. Reports existing checks without creating CI or enabling automatic quality gates.
+5. Leaves the two user-owned plans for you to write next.
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Project commands, config, conventions, adapters | Workflow settings and context | Add app code, create CI, commit |
+
+## When to use
+
+Run `/onboard` after installing BuildFlow into a fresh or early scaffold — before writing plans or running `/overview`. For an established codebase with shipped features, use `/adopt` instead.

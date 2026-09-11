@@ -1,0 +1,76 @@
+---
+title: Core Workflow
+description: Understand how planning, implementation, evidence, and completion fit together.
+---
+
+Build one feature, fix, or rollback at a time, behind review gates. Each step's instructions are plain markdown skills any capable agent can read and follow.
+
+## Visual overview
+
+The fresh-project loop starts with `/onboard`, turns your plans into the project overview, then repeats through spec, implementation, proof, review, and completion:
+
+```text
+scaffold app -> overlay BuildFlow -> /onboard -> write 2 plans -> /overview
+  -> /feature -> review spec -> /implement -> /check -> /audit -> /complete
+  -> NEXT FEATURE (build-plan.md updated)
+```
+
+Planning and Overview run during setup and after material plan changes. The repeated work-item loop begins at Feature; failed proof returns to Implement.
+
+## Establish the plan
+
+You own `project-plan.md` and `build-plan.md`. The overview step checks those inputs and generates compact project context that workflow skills load on demand.
+
+Before Feature 1, an eligible initial Overview run offers a reviewed baseline commit. The agent shows the candidate diff and waits for approval, keeping installation and planning separate from the first feature commit.
+
+Run overview again whenever the plans change materially, including when you add a feature after the initial build.
+
+## The normal feature loop
+
+| Stage | Command | Result |
+| --- | --- | --- |
+| Specify | `/feature` | Writes `current-feature.md` and stops for review |
+| Build | `/implement` | Makes small changes and runs Verify when configured |
+| Prove | `/check` | Runs the real app against the done-when criteria |
+| Review | `/audit current` | Reviews the branch delta, records findings |
+| Land | `/complete` | Rechecks Verify, archives, commits, merges with approval |
+
+### Feature
+
+Selects one build-plan item and writes its buildable spec. The spec covers goal, scope, small build steps with observable done-whens, files, contracts, and testing. It stops for your review before any code exists.
+
+### Implement
+
+Builds the approved spec in small, visible steps, one at a time. Each step ends with a working app, a readable diff, and a plain-English explanation. Runs the project's `Verify` command (when configured) as the automated gate.
+
+### Check
+
+Proves each done-when against the running application — a click, a route, a download, a flow across screens. Captures screenshots and output as evidence. Never edits source, never commits.
+
+### Audit
+
+Reviews the complete branch delta across quality, security, performance, and tests, and records durable findings in `buildflow/context/findings.md`. Unresolved P0 or P1 findings block completion.
+
+### Complete
+
+Runs the final safety pass, archives the spec to `buildflow/history/`, checks off the plan item, makes the one work-level commit, and squash-merges with approval. Push requires a separate explicit yes.
+
+## Other work enters the same loop
+
+- Use `/fix` for a small unplanned change or confirmed bug.
+- Use `/debug` first when the cause is unclear.
+- Use `/rollback` to reverse a completed feature without erasing its history.
+- Use `/try` when you want a human manual-review guide.
+
+## Optional automation
+
+Two explicit modes can automate bounded local work while preserving the same gates:
+
+- **Autopilot** (`/autopilot`) runs one feature or fix through its configured regular gates, then stops before completion.
+- **Continuous Mode** (`/continuous`) processes reviewed build-plan items serially with one local branch and one local main commit per feature.
+
+Neither mode pushes, deploys, publishes, sends messages, performs destructive actions, waives findings, or makes uncovered product decisions.
+
+## Resume from files
+
+The current feature checklist records completed steps. Git records code and any enabled checkpoint commits. After a context clear, `/status` can determine the exact next action without reconstructing the project from conversation history.

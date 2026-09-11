@@ -1,0 +1,54 @@
+---
+title: Code Quality With Audit
+description: Review a branch or project and record durable findings.
+---
+
+`/audit` is the branch-aware review gate. It reviews work across quality, security, performance, and tests, then records durable findings the workflow can enforce.
+
+## Invocation
+
+```text
+/audit current              # review the current branch delta
+/audit                      # full-project review
+/audit security current     # focused lens (quality | security | performance | tests)
+/audit independent current  # fresh reviewer, immutable checkpoint
+```
+
+## What audit examines
+
+| Lens | Covers |
+| --- | --- |
+| Quality | Correctness, code clarity, scope, conventions |
+| Security | Auth boundaries, secrets, input validation, injections |
+| Performance | Hot paths, queries, frontend payloads |
+| Tests | Coverage of in-scope logic, meaningful assertions |
+
+## Findings
+
+Audit records findings in `buildflow/context/findings.md` with:
+
+- Durable IDs (`F-01`, `F-02`, ...).
+- Severities (P0 critical, P1 high, P2 medium, P3 low).
+- Statuses: `open`, `fixed`, `closed`, `accepted`, `invalid`.
+
+Unresolved P0 or P1 findings block completion. A repair marks the finding `fixed`, and a later `/audit` pass moves it to `closed` — a repair never closes itself.
+
+## Independent audit
+
+`/audit independent current` prepares an immutable checkpoint handoff: a fresh reviewer session inspects an approved checkpoint using the selected installed adapter and model. The receipt records the target, permitted base, spec hash, requested and actual reviewer metadata, Check result, commands, evidence, findings, and remaining risk. Relevant later changes make the receipt stale, which blocks completion.
+
+Adapter, model, and fresh-session identity remain declared metadata, not cryptographic proof.
+
+## Gates
+
+`qualityGates.regular.audit` controls automatic audits:
+
+| Setting | Behavior |
+| --- | --- |
+| `manual` (default) | Only when explicitly requested |
+| `when-sensitive` | For auth, payments, secrets, user data, migrations, destructive ops, or broad changes |
+| `always` | For every work item |
+
+## When to use
+
+Run `/audit current` before `/complete` to review the builder's delta. Run `/audit independent current` for fresh, isolated review when sensitive or unusually broad work warrants it.

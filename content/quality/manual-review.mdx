@@ -1,0 +1,42 @@
+---
+title: Manual Review With Try
+description: Generate a human walkthrough and review the product yourself.
+---
+
+`/try` is the manual review path. It generates a read-only guide: where to go, what to click, what to expect. The guide is a review artifact, not proof.
+
+## Invocation
+
+```text
+/try            # active work item
+/try latest     # most recently completed feature
+```
+
+## What a try guide covers
+
+For the current work item (or an archived feature), the guide explains:
+
+- Where to go in the running app.
+- What to click or type.
+- What output or behavior to expect.
+- What would count as a failure.
+
+## How it fits the loop
+
+```text
+/implement -> /check (automated evidence) + /try (human walkthrough) -> /complete
+```
+
+`/check` proves done-whens with observable evidence. `/try` gives you a manual path to validate the same claims yourself. It never claims you performed the steps.
+
+## When it runs automatically
+
+The configured `tryGuide` quality gate can generate a guide automatically:
+
+| Setting | Behavior |
+| --- | --- |
+| `manual` (default) | Only when explicitly requested |
+| `when-user-facing` | When the change affects UI, navigation, copy, API, output, or another workflow a person uses |
+| `always` | For every work item |
+
+> The guide is a review artifact, not proof. Never claim the user performed it.

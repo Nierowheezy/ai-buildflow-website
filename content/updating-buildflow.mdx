@@ -1,0 +1,42 @@
+---
+title: Updating BuildFlow
+description: Keep your workflow skills and documentation current without losing project state.
+---
+
+Update BuildFlow when you want newer skills and workflow documentation. The updater preserves plans, project context, history, and project entry files.
+
+## Preview an update
+
+Check what would change before applying anything:
+
+```bash
+npx create-ai-buildflow@latest update --dry-run
+```
+
+## Apply an update
+
+```bash
+npx create-ai-buildflow@latest update
+```
+
+## What the updater preserves
+
+| Path | Preserved |
+| --- | --- |
+| `buildflow/project-plan.md` | Yes |
+| `buildflow/build-plan.md` | Yes |
+| `buildflow/context/**` | Yes |
+| `buildflow/history/**` | Yes |
+| `AGENTS.md` | Yes |
+| `CLAUDE.md` | Yes |
+| App configuration | Yes |
+
+The updater owns workflow skills and managed workflow files. It does not manage project plans, generated context, history, or project entry files.
+
+## Conflict handling
+
+Before copying, the installer checks its destinations and stops on symbolic links or incompatible file types. It does not partially copy BuildFlow around that conflict. Resolve the reported path and rerun.
+
+## After updating
+
+Run `/doctor` afterward to check BuildFlow setup and detect any drift, then follow any recommended cleanup in the output.

@@ -1,0 +1,37 @@
+---
+title: Continuous
+description: Complete the build plan serially in explicit Continuous Mode.
+---
+
+## Invocation
+
+```text
+/continuous              # selected or next feature
+/continuous 4            # targeted feature
+/continuous resume       # resume an interrupted run
+```
+
+In Codex, use `$continuous`.
+
+## What happens
+
+1. Selects or resumes the next reviewed planned feature.
+2. Repeats the complete local feature lifecycle: spec, build, verify, archive, commit, local merge.
+3. Uses one branch and one local `main` commit per feature.
+4. Applies the configured Continuous quality gates.
+5. Stops on decisions, unsafe state, failed checks, or unresolved P0/P1 findings.
+
+## Boundaries
+
+Continuous Mode is explicit opt-in for the remaining planned feature queue. It never:
+
+- Pushes, deploys, publishes, or sends
+- Performs destructive actions
+- Waives findings or makes product decisions for you
+- Iterates past the configured feature limit or stop conditions
+
+## Rules
+
+- The build plan is the queue — no separate feature list required.
+- Each feature keeps its own branch, verification, archive, and one clean local main commit.
+- The run stops before any external boundary or safety gate failure.

@@ -1,0 +1,41 @@
+---
+title: Tool Adapters
+description: How BuildFlow adapts to Codex, Claude Code, GitHub Copilot, and OpenCode.
+---
+
+BuildFlow exposes the same workflow through tool-specific adapters. The state lives in files, so a project can move between supported agents without moving its plan and history back into chat.
+
+| Tool | Installed adapter | Invocation |
+| --- | --- | --- |
+| Codex | `.agents/skills/` | `$feature`, `$implement`, or plain language |
+| Claude Code | `.claude/skills/` | `/feature`, `/implement`, and other slash commands |
+| GitHub Copilot | `AGENTS.md` and `.agents/skills/` | Ask Copilot to run the matching skill |
+| OpenCode | `AGENTS.md` and compatible shared skills | Ask OpenCode to run the matching skill |
+| Other tools | `AGENTS.md` plus readable skill files | Ask the agent to follow the matching `SKILL.md` |
+
+## Shared skills
+
+Codex, GitHub Copilot, and OpenCode can share `.agents/skills/`. Claude Code uses `.claude/skills/`, which OpenCode can also reuse. The installer avoids duplicating the same skills under `.opencode/skills/`.
+
+## Customizing
+
+Unused adapters can be removed:
+
+- Codex-only or Copilot-only projects can delete `CLAUDE.md` and `.claude/`.
+- Claude Code-only projects can delete `.agents/`, but should keep `AGENTS.md` because `CLAUDE.md` imports it.
+
+When changing shared workflow behavior, update the matching skill in both adapter folders so all tools stay aligned.
+
+## Claude Code
+
+`CLAUDE.md` is minimal and imports `AGENTS.md`, so there is a single source of truth:
+
+```markdown
+# CLAUDE.md
+
+See AGENTS.md for project instructions and the BuildFlow workflow.
+```
+
+## Context efficiency
+
+New installations auto-import only the core project instructions, compact overview, and active spec. Workflow skills load coding standards and interaction rules when they are needed, so durable project context stays available without loading every workflow rule into every turn.

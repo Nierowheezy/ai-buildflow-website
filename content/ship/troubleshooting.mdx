@@ -1,0 +1,56 @@
+---
+title: Troubleshooting
+description: Resolve common BuildFlow setup and workflow issues.
+---
+
+## Invalid config.json
+
+A mutating workflow command stops and points to `/doctor` when `buildflow/config.json` exists but is invalid. Missing files mean built-in defaults. Read-only status still works.
+
+**Fix:** Run `/doctor`, fix the reported issue, then rerun the command.
+
+## Mutating command says "no spec"
+
+`/implement` stops when `current-feature.md` has no real spec (the stub) or a completed status.
+
+**Fix:** Run `/feature` (planned feature), `/fix` (ad-hoc bug), or `/rollback` (completed-feature reversal) first.
+
+## Completion blocked by a finding
+
+`/complete` refuses to merge while a P0 or P1 finding is `open` or `fixed`.
+
+**Fix:** Repair each `open` P0/P1 as an extra reviewed step, then run `/audit` to move repairs to `closed`. Only you can set `accepted`; `/audit` re-examination can set `invalid`.
+
+## Completion blocked by stale review
+
+A pending, changes-requested, malformed, or stale independent-review record always blocks completion once initiated.
+
+**Fix:** Run `/audit independent current` to prepare a new checkpoint handoff, or explicitly cancel the manual review in the current chat.
+
+## `/check` reports `verification incomplete`
+
+A done-when could not be verified with the available evidence.
+
+**Fix:** Hand back to `/implement` and find a way to produce the evidence, or report the gap plainly — never pass an unverified claim as green.
+
+## Directory not empty when scaffolding
+
+Never run a framework scaffolder inside a directory that already holds BuildFlow files (`AGENTS.md`, `CLAUDE.md`, `.agents/`, `.claude/`, `buildflow/`); it fails because the directory isn't empty.
+
+**Fix:** Scaffold the app in an empty folder, then overlay BuildFlow files.
+
+## Update conflicts
+
+The installer checks destinations and stops on symbolic links or incompatible file types instead of partially copying around a conflict.
+
+**Fix:** Resolve the reported path and rerun the installer. Run `/doctor` after any update.
+
+## Git repository missing
+
+The workflow needs branches.
+
+**Fix:** Run `git init` in the project root, then rerun the command.
+
+## Not a BuildFlow problem?
+
+Check your project's own commands in `AGENTS.md`, run `npm run build` to validate the app, and consult the [documentation](/docs).

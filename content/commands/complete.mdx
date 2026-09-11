@@ -1,0 +1,56 @@
+---
+title: Complete
+description: Run final gates, archive the work, make the commit, and merge with approval.
+---
+
+## Invocation
+
+```text
+/complete       (Claude Code)
+$complete       (Codex)
+```
+
+## What happens
+
+### Final safety pass
+
+Before logging or committing, `/complete` runs a short safety pass and reports blockers only:
+
+- Active spec exists and the work is not being completed from `main`.
+- Branch name uses the configured prefix.
+- Changed files are tied to the active spec.
+- The exact `Verify` command passed in this session (when declared).
+- Any required quality gates have evidence.
+- No P0 or P1 finding is `open` or `fixed` in the findings ledger.
+
+### Log the work
+
+- **Feature** — archives the spec to `buildflow/history/features/NN-name.md`, checks off the plan item.
+- **Fix** — archives to `buildflow/history/fixes/name.md`.
+- **Rollback** — archives to `buildflow/history/rollbacks/YYYY-MM-DD-NN-name.md`, preserves the original feature archive, unchecks the target item.
+
+Resolved findings travel into the archive; `open`, `fixed`, and `unverified` entries stay in the live ledger. A passing independent-review receipt is appended to the archive. Consumed `prototypes/` are discarded.
+
+### Make the work commit
+
+Stage everything and make one conventional work commit (for example `feat: <feature>`). Verify must pass first.
+
+### Merge
+
+1. Squash-merge the branch into main, only with your explicit go-ahead.
+2. Delete the branch after a clean merge.
+3. Stop and ask whether to push local `main` to its upstream — the merge approval does not count as push approval.
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Spec, config, findings, review, Verify | History archives, plan checkboxes, work commit | Merge or push without explicit approval |
+
+## Rules
+
+- The work item is the unit of history: one squashed commit on main.
+- A rollback preserves the original feature archive and adds a separate rollback archive. Never rewrite history to make a feature look as if it never existed.
+- Don't merge unfinished or failing work.
+- Never merge while a P0 or P1 finding is `open` or `fixed`.
+- Merging and pushing are the user's calls: get an explicit yes for the merge, then ask whether to push main.

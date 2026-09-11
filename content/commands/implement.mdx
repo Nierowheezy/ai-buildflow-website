@@ -1,0 +1,44 @@
+---
+title: Implement
+description: Build the approved spec in small, reviewed steps.
+---
+
+## Invocation
+
+```text
+/implement       (Claude Code)
+$implement       (Codex)
+```
+
+## What happens
+
+1. Reads `buildflow/config.json` and the active `current-feature.md` spec.
+2. Creates a branch from the spec, using the configured prefix (`feature/`, `fix/`, `rollback/`).
+3. Works through the build steps in order, one at a time.
+4. For each step: implements the smallest change, shows the diff, explains it in plain English, and proves the done-when with evidence.
+5. Runs the exact `Verify` command from `AGENTS.md` as the automated gate (when declared).
+6. Iterates until the step passes, then checks it off in the spec.
+7. Hands off to `/complete` with a compact review packet.
+
+## The step loop
+
+- Build one step → show diff → explain → prove → verify → iterate → check off.
+- Never batch the whole feature into one diff.
+- A step whose diff is too big to read is a step that is too big — split it.
+
+## Finding repairs
+
+Before handing off, `/implement` checks `findings.md` and `review.md`. A P0 or P1 finding still `open` or `fixed` blocks completion, so it repairs each one as an extra reviewed step and runs `/audit` to close the loop.
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Spec, config, standards, overview, findings | Product code on a branch; spec checkboxes; finding statuses as `fixed` | Commit to main, merge, push |
+
+## Rules
+
+- One small step per diff. Follow the configured review cadence.
+- Explain every change in plain English.
+- Iterate on the branch until each step works; never commit code the user has not approved.
+- Build only what the spec says. If the spec is wrong or thin, stop and fix the spec first.

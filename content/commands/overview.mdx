@@ -1,0 +1,29 @@
+---
+title: Overview
+description: Generate durable project context from both planning docs.
+---
+
+## Invocation
+
+```text
+/overview       (Claude Code)
+$overview       (Codex)
+```
+
+## What happens
+
+1. Reads the two user-owned plans: `project-plan.md` and `build-plan.md`.
+2. Formats clear feature lists while preserving scope, order, IDs, and completion state.
+3. Generates `buildflow/context/project-overview.md` — the compact project context every workflow skill loads.
+4. Keeps generated context below 20,000 bytes.
+5. On the initial run, offers a reviewed baseline commit before Feature 1.
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Both user-owned plans | `buildflow/context/project-overview.md` | Edit application code, commit without approval |
+
+## When to use
+
+Run Overview after writing or materially changing your plans, and before any `/feature` work. It is the bridge from your roadmap to durable project context.

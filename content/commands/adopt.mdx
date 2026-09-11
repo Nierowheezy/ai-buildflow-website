@@ -1,0 +1,28 @@
+---
+title: Adopt
+description: Bring BuildFlow into an existing codebase with shipped behavior.
+---
+
+## Invocation
+
+```text
+/adopt       (Claude Code)
+$adopt       (Codex)
+```
+
+## What happens
+
+1. Surveys the working repository — structure, shipped features, conventions, and commands.
+2. Generates plans that account for work that already exists.
+3. Distinguishes completed behavior from the roadmap ahead.
+4. Prepares project context that reflects the real project.
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Repository structure, features, conventions, commands | Plans and project context | Add app code, commit, migrate data |
+
+## When to use
+
+Run `/adopt` instead of `/onboard` when the repository already has shipped features or an established codebase. See the [Existing Codebase guide](/docs/existing-codebase) for the full path.

@@ -1,0 +1,76 @@
+---
+title: Getting Started
+description: Install AI BuildFlow into a scaffolded application and prepare its first feature loop.
+---
+
+Install AI BuildFlow into a scaffolded application and prepare its first feature loop.
+
+## What BuildFlow adds
+
+AI BuildFlow is an AI coding workflow overlay for an application you already scaffolded. It adds durable planning files, focused agent skills, and review gates without adding application code or replacing your application framework.
+
+| Layer | Purpose |
+| --- | --- |
+| Plans | Define what you are building and the order of work |
+| Configuration | Share deterministic workflow policy across every adapter |
+| Context | Give each agent session the same project understanding |
+| Current feature | Keep one buildable scope active at a time |
+| History | Preserve completed decisions and outcomes |
+
+> BuildFlow is not an app starter. Choose your language, framework, architecture, and infrastructure first.
+
+**Requirements:** Node.js 22 or newer, an existing application, and a Git repository.
+
+## Fresh project setup
+
+### 1. Scaffold the application
+
+Use the stack that fits the project. Next.js is only an example — BuildFlow works with any stack.
+
+```bash
+npx create-next-app@latest my-app
+cd my-app
+git init # if the scaffolder did not create a repository
+```
+
+### 2. Install BuildFlow
+
+Run the installer inside the application directory.
+
+```bash
+npx create-ai-buildflow@latest
+```
+
+The interactive installer shows Codex, Claude Code, GitHub Copilot, and OpenCode as a checkbox list. The installer adds only the compatible adapter files the selected tools need.
+
+It also creates `buildflow/.state/manifest.json`, which lets later updates distinguish unchanged BuildFlow-owned files from local modifications.
+
+Interactive setup also offers to install the optional [CLI](/docs/cli), which provides the `buildflow` command for project status checks and a live local dashboard.
+
+### 3. Onboard the project
+
+Run `$onboard` in Codex, `/onboard` in Claude Code, or ask GitHub Copilot or OpenCode to run the onboard skill. It inspects the real stack, commands, coding conventions, adapters, ignore rules, project configuration, and any existing verification or CI.
+
+### 4. Write the two plans you own
+
+Fill in `buildflow/project-plan.md` with as much product detail as the project needs, then write `buildflow/build-plan.md` as a short ordered feature list. Plain bullets or numbered lines are fine; Overview adds tracking checkboxes.
+
+You can write the plans directly or develop them through any AI conversation. If you want guided help, run `$discovery` in Codex or `/discovery` in Claude Code.
+
+### 5. Generate project context
+
+Run `$overview` in Codex or `/overview` in Claude Code. It formats clear feature lists while preserving scope, order, IDs, and completion state, then generates `buildflow/context/project-overview.md`. Review the generated context before building.
+
+## The shortest successful loop
+
+Once setup is complete, repeat this sequence for each feature:
+
+```text
+/feature -> review -> /implement -> /check -> /complete
+```
+
+The skills stop at important boundaries. They do not merge, push, deploy, publish, or send anything without the approval required by the workflow.
+
+## Already have a codebase?
+
+Use the [existing codebase guide](/docs/existing-codebase) instead of onboarding as a fresh project. Adoption surveys the working repository and accounts for features that are already shipped.

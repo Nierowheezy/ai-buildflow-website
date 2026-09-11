@@ -1,0 +1,27 @@
+---
+title: Fix
+description: Document an ad-hoc bug or change into the active spec.
+---
+
+## Invocation
+
+```text
+/fix "sign-in broken"       (Claude Code)
+$fix "sign-in broken"       (Codex)
+```
+
+## What happens
+
+1. Takes a small unplanned change or confirmed bug.
+2. Writes the active spec in `buildflow/context/current-feature.md` marked `Type: Fix`.
+3. Stops for review before code changes — same loop as `/feature`, without a build-plan item.
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Build plan, overview, standards | `current-feature.md` (fix spec) | Application code, commits, merges |
+
+## When to use
+
+Use `/fix` for a bug or small ad-hoc change that does not belong on the roadmap. A fix has no build-plan number; at completion it archives to `buildflow/history/fixes/`. For a genuinely new product capability, use `/feature` instead.

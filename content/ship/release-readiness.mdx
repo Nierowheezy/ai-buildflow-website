@@ -1,0 +1,26 @@
+---
+title: Release Readiness
+description: Prepare to ship with local Render or Vercel configuration.
+---
+
+Deployment is explicit. `/release` prepares local Render or Vercel configuration and runs readiness checks, but it stops before deploy, remote service changes, push, or publish unless you give a separate yes in the current chat.
+
+## The release checklist
+
+`/release` checks:
+
+1. **Choose target** — Render or Vercel.
+2. **Run checks** — build, start command, output directory, environment names, and health path.
+3. **Prepare config** — local platform configuration when the project needs it.
+4. **Review release** — readiness report and smoke-test plan.
+
+## What /release never does
+
+- Deploys to Render or Vercel.
+- Changes a remote service.
+- Pushes or publishes.
+- Grants permission by itself — a separate yes in the current chat is always required.
+
+## Relationship to the loop
+
+Release happens after `/complete` when the project is ready to ship. Existing deploy configuration stays intact; `/release` only prepares what the project needs and reviews readiness.

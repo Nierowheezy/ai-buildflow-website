@@ -1,0 +1,48 @@
+---
+title: Check
+description: Prove the current spec against the real running application.
+---
+
+## Invocation
+
+```text
+/check                 # verify every done-when
+/check download flow   # verify a specific flow
+```
+
+In Codex, use `$check`.
+
+## What happens
+
+1. Reads `buildflow/config.json` and `current-feature.md`.
+2. Turns the spec's done-when criteria into a concrete checklist of observable claims.
+3. Starts the real app, CLI, or server using documented commands.
+4. Exercises each claim for real — click, type, submit, download — capturing screenshots and output.
+5. Watches for console errors and failed network requests.
+6. Reports a verdict per item: pass, fail, or skip — each backed by evidence.
+
+## Evidence, not vibes
+
+```text
+[pass] Download saves certificate - file opened to the cert
+[fail] PDF border missing - printBackground not set; screenshot: pdf-no-border.png
+[skip] Vercel render - cannot verify locally
+```
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Spec, config, app | Only the status line in `current-feature.md` | Edit product source, commit, merge |
+
+## Rules
+
+- **Observe product behavior, do not repair it.** Fixing is `/implement`'s job.
+- **Evidence or it did not happen.** Every pass is backed by something observed.
+- **Honest over green.** "Couldn't verify" and "failed" are valid, useful results.
+
+<Callout type="info" title="Build vs check">
+
+A passing build proves the code compiles. `/check` proves the thing the spec promised actually happens. If a done-when is marked `verification failed`, hand back to `/implement`; if `unverified`, say why — never report it as a pass.
+
+</Callout>

@@ -1,0 +1,29 @@
+---
+title: Release
+description: Prepare local Render or Vercel release configuration and checks.
+---
+
+## Invocation
+
+```text
+/release       (Claude Code)
+$release       (Codex)
+```
+
+## What happens
+
+1. Chooses a deployment target: Render or Vercel.
+2. Checks the build, start command, output directory, environment names, and health path.
+3. Prepares local Render or Vercel configuration when the project needs it.
+4. Runs readiness checks and plans smoke tests.
+5. Stops before any deploy, remote service change, push, or publish unless you give a separate yes in the current chat.
+
+## Boundaries
+
+`/release` prepares configuration and run readiness checks. Nothing deploys, publishes, or changes a remote service without your explicit approval in the current chat.
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Project config, build, start, env names | Local platform config files | Deploy, change remote services, push, publish |

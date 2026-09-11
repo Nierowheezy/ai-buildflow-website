@@ -1,0 +1,38 @@
+---
+title: Feature
+description: Turn a build-plan item into the active spec and stop before code.
+---
+
+## Invocation
+
+```text
+/feature                # next unchecked build-plan item
+/feature 3              # specific item by number
+/feature "team invites" # specific item by name
+```
+
+In Codex, use the same forms with `$feature`.
+
+## What happens
+
+1. Selects the next unchecked build-plan item (or the requested one).
+2. If a genuinely new capability does not match the plan, checks for near-duplicates and proposes a feature-sized plan addition.
+3. After you approve the plan change, updates the build plan, refreshes the overview, and proceeds.
+4. Sizes the feature and splits it into sub-features if it contains independent outcomes.
+5. Writes a full spec to `buildflow/context/current-feature.md`: goal, scope, build steps with observable done-whens, files, contracts, and testing.
+6. Red-teams the draft — unhappy paths, step size, scope honesty, contracts, vague done-whens — and applies fixes before presenting.
+7. Stops for your review before any application code changes.
+
+## Reads and writes
+
+| Reads | Writes | Never does |
+| --- | --- | --- |
+| Build plan, project overview, standards, Verify | `buildflow/context/current-feature.md`; plans only for an approved new feature | Application code, commits, merges |
+
+## Rebuild after rollback
+
+A rebuilt feature keeps its stable plan ID. Feature proves the earlier builds and their completed rollbacks, then records the next build attempt (`--build-2`, `--build-3`) before review.
+
+## Visual features
+
+If `prototypes/` exists, the spec links the relevant mockups and makes porting the shared theme tokens the first implementation step. A visual target should not be reconstructed from prose when a real reference exists.

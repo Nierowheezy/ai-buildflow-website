@@ -1,0 +1,29 @@
+---
+title: Live Dashboard
+description: See the whole project at a glance on your local machine.
+---
+
+## Invocation
+
+```bash
+buildflow dashboard
+```
+
+Opens a live, read-only view of the project at `http://127.0.0.1:3000` (or another local port). Stops when you press Ctrl+C.
+
+## What it shows
+
+**Roadmap** — what is complete, what comes next, and how much remains.
+
+**Health** — catch warnings, findings, changed files, and branch state.
+
+**Next** — return after a break and know exactly what moves the project forward.
+
+The dashboard refreshes from the same files BuildFlow already uses and stays on your machine.
+
+## Boundaries
+
+- Binds to `127.0.0.1` (loopback only).
+- Read-only — it does not run workflow commands.
+- Does not expose the project outside the local machine.
+- Shows the active or most recent substantial command from `buildflow/.state/run.json` when present.

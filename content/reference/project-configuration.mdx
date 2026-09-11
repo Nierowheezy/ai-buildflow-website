@@ -1,0 +1,81 @@
+---
+title: Project Configuration
+description: The buildflow/config.json schema and what it controls.
+---
+
+`buildflow/config.json` is the user-owned, machine-readable workflow policy for a project. Workflow skills read the relevant settings before acting. A missing file means built-in defaults. An invalid file falls back to defaults for read-only status, but mutating commands stop and point to `/doctor`.
+
+## Schema
+
+```json
+{
+  "schemaVersion": 1,
+  "workflow": {
+    "stepReview": "feature",
+    "checkpointCommits": "disabled"
+  },
+  "git": {
+    "featureBranchPrefix": "feature/",
+    "fixBranchPrefix": "fix/",
+    "rollbackBranchPrefix": "rollback/"
+  },
+  "verification": {
+    "logicTests": "when-configured",
+    "uiEvidence": "when-available"
+  },
+  "qualityGates": {
+    "regular": {
+      "audit": "manual",
+      "independentReview": "manual",
+      "check": "manual",
+      "tryGuide": "manual"
+    },
+    "continuous": {
+      "audit": "manual",
+      "independentReview": "manual",
+      "check": "manual",
+      "tryGuide": "manual"
+    }
+  },
+  "continuous": {
+    "maxFeatures": null,
+    "maxRepairAttempts": 2,
+    "finalIntegrationAudit": false
+  }
+}
+```
+
+## workflow
+
+| Setting | Values | Effect |
+| --- | --- | --- |
+| `stepReview` | `feature` (default) \| `every` | Implementation review cadence. `feature` collects the final review packet; `every` pauses after each step |
+| `checkpointCommits` | `enabled` \| `disabled` | Optional per-step commit checkpoints on the working branch |
+
+## git
+
+Branch prefixes for feature, fix, and rollback branches.
+
+## verification
+
+| Setting | Values | Effect |
+| --- | --- | --- |
+| `logicTests` | `when-configured` \| `required` | Whether logic changes require a configured test runner |
+| `uiEvidence` | `when-available` \| `required` | Whether UI done-whens require direct browser evidence |
+
+## qualityGates
+
+Each gate defaults to `manual`, so the named skill runs only when explicitly requested.
+
+| Gate | Conditional modes | Meaning |
+| --- | --- | --- |
+| `audit` | `when-sensitive` | Runs for auth, payments, secrets, user data, migrations, destructive ops, or broad changes |
+| `independentReview` | `when-sensitive` | Requires a fresh reviewer session for sensitive work |
+| `check` | `when-behavioral` | Runs when a done-when needs observed runtime behavior |
+| `tryGuide` | `when-user-facing` | Generates a manual guide when a person directly uses the change |
+
+`always` runs the gate for every work item. `manual` runs it only when explicitly requested.
+
+## The approval boundaries are not configurable
+
+Configuration can make review or verification stricter and can tune local branch names and automated-mode limits. It **never** grants permission to commit, merge, push, deploy, publish, send, delete data, waive a failing check, or accept a finding. Those approval and safety boundaries are fixed.
