@@ -1,6 +1,6 @@
 # ai-buildflow-website
 
-Marketing website and documentation for [AI BuildFlow](https://ai-buildflow.dev.vercel.app) —
+Marketing website and documentation for [AI BuildFlow](https://ai-buildflow.vercel.app) —
 a file-backed, spec-driven workflow for building real software with AI.
 
 Built with Next.js, Tailwind CSS, and MDX. The docs are authored as Markdown/MDX
@@ -48,5 +48,5 @@ sidebar, sitemap, and prev/next pagination.
 
 ## Domain
 
-Deployed at https://ai-buildflow.dev.vercel.app (see `app/sitemap.ts` and the
+Deployed at https://ai-buildflow.vercel.app (see `app/sitemap.ts` and the
 `baseUrl` it uses).
